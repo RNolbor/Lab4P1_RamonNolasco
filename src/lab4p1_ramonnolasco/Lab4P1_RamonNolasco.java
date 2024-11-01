@@ -35,23 +35,23 @@ public class Lab4P1_RamonNolasco {
                             break;
                         } 
                         else {
-                            System.out.println("*Cadena inválida, ingrese de nuevo*");
+                            System.out.println("*Cadena invalida, ingrese de nuevo*");
                         }
                     }
 
                     int decimal = convertirBinarioADecimal(binario);
-                    System.out.println("El número convertido es: " + decimal);
+                    System.out.println("El numero convertido es: " + decimal);
                     break;
                 
                 case 2:
                     String[] extensionesValidas = {"@gmail.com", "@outlook.com", "@unitec.edu"};
                     
-                    System.out.print("Ingrese una dirección de correo: ");
+                    System.out.print("Ingrese una direccion de correo: ");
                     scanner.nextLine();
                     String correo = scanner.nextLine();
                     
                     if (!tieneArroba(correo)) {
-                        System.out.println("Correo inválido: no contiene '@'");
+                        System.out.println("Correo invalido: no contiene '@'");
                         break;
                     }
                     
@@ -62,7 +62,7 @@ public class Lab4P1_RamonNolasco {
                         double porcentajeCoincidencia = calcularPorcentajeCoincidencia(correo, extensionesValidas[i]);
 
                         if (porcentajeCoincidencia == 1.0) {
-                            System.out.println("Correo válido con la extensión " + extensionesValidas[i]);
+                            System.out.println("Correo valido con la extension " + extensionesValidas[i]);
                             break;
                         }
                         if (porcentajeCoincidencia > mejorPorcentajeCoincidencia) {
@@ -71,7 +71,7 @@ public class Lab4P1_RamonNolasco {
                         }
                     }
                     if (mejorPorcentajeCoincidencia > 0 && mejorPorcentajeCoincidencia < 1.0) {
-                        System.out.println("Extensión sugerida: " + extensionesValidas[mejorCoincidenciaIndice] + 
+                        System.out.println("Extension sugerida: " + extensionesValidas[mejorCoincidenciaIndice] + 
                                            " con porcentaje de coincidencia " + mejorPorcentajeCoincidencia);
                     } else if (mejorPorcentajeCoincidencia == 0.0) {
                         System.out.println("No hay coincidencia válida para el correo.");
@@ -79,16 +79,24 @@ public class Lab4P1_RamonNolasco {
                     break;
            
                 case 3:
-                    
+                    String oracion = "";
+                    String palabra = "";
                     scanner.nextLine();
                     System.out.println("Ingrese cadena: ");
-                    scanner.nextLine();
+                    oracion = scanner.nextLine();
                     System.out.println("Ingrese palabra: ");
+                    palabra = scanner.next();
+                    
+                    formarPalabra(oracion, palabra);
+                    break;
                     
                 case 4:
                     menu = false;
                     break;
-                    
+                
+                default:
+                    System.out.println("Ingrese una opcion valida!");
+                
             }
             
         } while(menu == true);        
@@ -153,4 +161,49 @@ public class Lab4P1_RamonNolasco {
         }
         return -1;
     }
+    
+    
+    public static void formarPalabra(String oracion, String palabra){
+        
+        String oracionModificada = "";
+        String palabraFormada = "";
+        boolean completado = true;
+        int posicion = 1;
+        
+        for (int i = 0; i < palabra.length(); i++) {       
+            char letraAct = palabra.charAt(i);
+            boolean letraEncontrada = false;
+            
+            for (int j = 0; j < oracion.length(); j++) {
+                char letraora = oracion.charAt(j);
+                
+                if (letraora == letraAct){
+                    palabraFormada += letraAct;
+                    oracionModificada += "*";
+                    letraEncontrada = true;
+                    posicion += 1;
+                    break;
+                } 
+                else {
+                    oracionModificada += letraora;
+                }            
+            }
+            if (!letraEncontrada) {
+                completado = false;
+            }
+        }
+            
+        System.out.println("Letras obtenidas:");
+        System.out.println(oracionModificada);
+
+        if (completado == true) {
+        System.out.println("La palabra se completó: " + palabraFormada);
+        } else {
+        System.out.println("La palabra no se completó. Se logró formar: " + palabraFormada);
+        }
+        System.out.println("Posiciones: " + posicion);
+    }
+    
+    
+    
 }
