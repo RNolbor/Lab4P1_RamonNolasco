@@ -24,7 +24,6 @@ public class Lab4P1_RamonNolasco {
             switch (opcion){
                 
                 case 1: 
-                            
                     String binario;
 
                     while (true) {
@@ -36,18 +35,55 @@ public class Lab4P1_RamonNolasco {
                             break;
                         } 
                         else {
-                            System.out.println("*Cad1ena inválida, ingrese de nuevo*");
+                            System.out.println("*Cadena inválida, ingrese de nuevo*");
                         }
                     }
 
                     int decimal = convertirBinarioADecimal(binario);
                     System.out.println("El número convertido es: " + decimal);
-                                break;
+                    break;
                 
                 case 2:
+                    String[] extensionesValidas = {"@gmail.com", "@outlook.com", "@unitec.edu"};
                     
-                
+                    System.out.print("Ingrese una dirección de correo: ");
+                    scanner.nextLine();
+                    String correo = scanner.nextLine();
+                    
+                    if (!tieneArroba(correo)) {
+                        System.out.println("Correo inválido: no contiene '@'");
+                        break;
+                    }
+                    
+                    int mejorCoincidenciaIndice = -1;
+                    double mejorPorcentajeCoincidencia = 0.0;
+
+                    for (int i = 0; i < extensionesValidas.length; i++) {
+                        double porcentajeCoincidencia = calcularPorcentajeCoincidencia(correo, extensionesValidas[i]);
+
+                        if (porcentajeCoincidencia == 1.0) {
+                            System.out.println("Correo válido con la extensión " + extensionesValidas[i]);
+                            break;
+                        }
+                        if (porcentajeCoincidencia > mejorPorcentajeCoincidencia) {
+                            mejorPorcentajeCoincidencia = porcentajeCoincidencia;
+                            mejorCoincidenciaIndice = i;
+                        }
+                    }
+                    if (mejorPorcentajeCoincidencia > 0 && mejorPorcentajeCoincidencia < 1.0) {
+                        System.out.println("Extensión sugerida: " + extensionesValidas[mejorCoincidenciaIndice] + 
+                                           " con porcentaje de coincidencia " + mejorPorcentajeCoincidencia);
+                    } else if (mejorPorcentajeCoincidencia == 0.0) {
+                        System.out.println("No hay coincidencia válida para el correo.");
+                    }
+                    break;
+           
                 case 3:
+                    
+                    scanner.nextLine();
+                    System.out.println("Ingrese cadena: ");
+                    scanner.nextLine();
+                    System.out.println("Ingrese palabra: ");
                     
                 case 4:
                     menu = false;
@@ -55,7 +91,7 @@ public class Lab4P1_RamonNolasco {
                     
             }
             
-        }while(menu == true);        
+        } while(menu == true);        
     }
 
     public static int convertirBinarioADecimal(String binario) {
@@ -70,5 +106,51 @@ public class Lab4P1_RamonNolasco {
         }
         return decimal;
     }
-}
+    
+    public static boolean tieneArroba(String correo) {
+        for (int i = 0; i < correo.length(); i++) {
+            if (correo.charAt(i) == '@') {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public static double calcularPorcentajeCoincidencia(String correo, String extension) {
+        int cuentaCoincidencias = 0;
+        int indiceArroba = indiceDeArroba(correo);
+
+        if (indiceArroba == -1) {
+            return 0.0;
+        }
+
+        String extensionCorreo = correo.substring(indiceArroba);
+        
+        int longitudComparacion;
+        if (extensionCorreo.length()< extension.length()) {
+            longitudComparacion = extensionCorreo.length();
+        } else {
+            longitudComparacion = extension.length();
+        }
+
+    
+        for (int i = 0; i < longitudComparacion; i++) {
+            if (extensionCorreo.charAt(i)== extension.charAt(i)) {
+                cuentaCoincidencias++;
+            } else {
+                break; 
+            }
+        }
+
+        return (double) cuentaCoincidencias /extension.length();
+    }
+
+    public static int indiceDeArroba(String correo) {
+        for (int i = 0; i < correo.length(); i++) {
+            if (correo.charAt(i) == '@') {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
