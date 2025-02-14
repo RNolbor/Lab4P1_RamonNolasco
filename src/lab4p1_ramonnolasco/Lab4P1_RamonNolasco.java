@@ -39,6 +39,10 @@ public class Lab4P1_RamonNolasco {
             switch (opcion){
                 
                 case 1: 
+                    System.out.println("Ingrese una cadena para procesar su orden: ");
+                    String orden = input.nextLine();
+                    
+                    procesarOrden(orden);
                     
                     break;
                     
@@ -71,8 +75,66 @@ public class Lab4P1_RamonNolasco {
             
             
         }while(opcion != 4);
-   
+ 
     }
+    
+    //METODOS EJECICIO 1
+    
+    public static void procesarOrden(String orden) {
+        int maiz = 0, papa = 0, cafe = 0, trigo = 0, otros = 0;
+        int i = 0;
+
+        while (i < orden.length()) {
+            
+            String numStr = "";
+            while (i < orden.length() && orden.charAt(i) >= '0' && orden.charAt(i) <= '9') {
+                numStr += orden.charAt(i);
+                i++;
+            }
+
+            if (numStr.equals("")) {
+                System.out.println("Orden invalida! se esperaba un numero antes de las letras.");
+                return;
+            }
+            int cantidad = Integer.parseInt(numStr);
+            
+            if (i >= orden.length()) {
+                System.out.println("Orden invalida! se esperaba letra(s) despues del numero.");
+                return;
+            }
+
+            
+            while (i < orden.length() && ((orden.charAt(i) >= 'a' && orden.charAt(i) <= 'z') || (orden.charAt(i) >= 'A' && orden.charAt(i) <= 'Z'))) {
+                char letra = Character.toLowerCase(orden.charAt(i));
+                switch (letra) {
+                    case 'm':
+                        maiz += cantidad;
+                        break;
+                    case 'p':
+                        papa += cantidad;
+                        break;
+                    case 'c':
+                        cafe += cantidad;
+                        break;
+                    case 't':
+                        trigo += cantidad;
+                        break;
+                    default:
+                        otros += cantidad;
+                        break;
+                }
+                i++;
+            }
+        }
+
+        System.out.println("Orden de compras:");
+        System.out.println("Maiz: " + maiz);
+        System.out.println("Papa: " + papa);
+        System.out.println("Cafe: " + cafe);
+        System.out.println("Trigo: " + trigo);
+        System.out.println("Otros: " + otros);
+    }
+    
     
     
     //METODO EJERCICIO 3
