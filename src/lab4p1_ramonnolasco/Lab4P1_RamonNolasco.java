@@ -47,6 +47,13 @@ public class Lab4P1_RamonNolasco {
                     break;
                     
                 case 2:
+                    System.out.println("Ingrese primera peticion: ");
+                    String peticion1 = input.nextLine();
+                    System.out.println("Ingrese segunda peticion: ");
+                    String peticion2 = input.nextLine();
+                    
+                    
+                    
                     
                     break;
                     
@@ -135,7 +142,18 @@ public class Lab4P1_RamonNolasco {
         System.out.println("Otros: " + otros);
     }
     
+    //METODOS EJERCICIO 2
     
+    public String cadenaDeSimilitudes (String peticion1, String peticion2){
+        String similitudes = "";
+        
+        similitudes += "Hola Mundo";
+        
+        
+        
+        return similitudes;
+    }
+    //cadenacadena
     
     //METODO EJERCICIO 3
     
